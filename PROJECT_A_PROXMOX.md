@@ -45,7 +45,7 @@ Ziel des Projekts war der Aufbau einer stabilen Virtualisierungsumgebung mit Pro
 ## 4. Projektdurchführung
 
 ### 4.2 Netzwerk-Fehleranalyse (Zentrales Problem)
-- **Symptome:** Proxmox und VM zeitweise erreichbar, zeitweise değil.
+- **Symptome:** Proxmox und VM zeitweise erreichbar, zeitweise nicht.
 - **Ursache:** Ein eingesetztes Netzwerkgerät (Hub) erwies sich als inkompatibel bzw. instabil im Zusammenspiel mit Linux und Bridged Networking.
 - **Lösung:** Austausch des Netzwerkgeräts.
 - **Ergebnis:** Netzwerkverbindung stabil und reproduzierbar.
