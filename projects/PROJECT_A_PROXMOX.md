@@ -1,52 +1,75 @@
-# 🚀 Projekt: Proxmox VE Integration & Ubuntu Server Hardening
+# Projektname: Proxmox VE – Installation, Netzwerk-Fehleranalyse, Ubuntu-Server-VM & Hardening
 
-**Durchgeführt von:** Mesut Sirtikara
-**Datum:** 30.12.2025 – 02.01.2026
+**Projektart:** Systemintegration / Server- & Netzwerkadministration  
+**Durchgeführt von:** Mesut Sirtikara  
+**Datum:** 30.12.2025 – 02.01.2026  
+**Ausbildungsberuf:** Fachinformatiker für Systemintegration (Umschulung)  
+**Projektumfeld:** Virtualisierungs- und Serverumgebung (Lab / Heimnetz)
 
 ---
 
 ## 1. Projektziel
-Das Ziel dieses Projekts war der Aufbau einer stabilen Virtualisierungsumgebung. Dabei wurde ein MacBook Pro als Proxmox-Node konfiguriert, um darauf eine gehärtete Ubuntu Server VM zu betreiben.
+Ziel des Projekts war der Aufbau einer stabilen Virtualisierungsumgebung mit Proxmox VE sowie die Bereitstellung eines Ubuntu Server als virtuelle Maschine inklusive sicherer Administration und Wiederherstellungsstrategie.
+Der Ubuntu-Server sollte:
+* stabil im LAN erreichbar sein (Web/SSH),
+* per SSH administrierbar sein,
+* sicher gehärtet werden (Key-only SSH, Root-Login deaktiviert, Firewall),
+* durch einen Snapshot als „sauberer Referenzstand“ abgesichert werden.
 
-## 2. Infrastruktur & Hardware
-Die Umgebung nutzt eine direkte Netzwerkverbindung zwischen Host und Admin-Client, um Latenzen zu minimieren:
+## 2. Ist- / Soll-Zustand
+### 2.1 Ist-Zustand
+* Keine vorhandene Virtualisierungsplattform
+* Kein zentraler Server im Netzwerk
+* Keine sichere Remote-Administration
+* Netzwerkumgebung mit instabiler Hardware (Hub)
+* Keine Wiederherstellungsstrategie
 
-* **Server (Host):** MacBook Pro 2017 – Bare-Metal Proxmox VE 8.x.
-* **Management-Konsole:** Mac Mini M4 – Administration via Web-GUI & SSH.
-* **Netzwerk:** Aktuell über direkte Bridge-Konfiguration (Vermeidung von fehlerhaften Hubs).
+### 2.2 Soll-Zustand
+* Proxmox VE als stabile Virtualisierungsplattform
+* Ubuntu Server als virtuelle Maschine
+* Sichere Administration per SSH (Key-only)
+* Firewall zur Minimierung der Angriffsfläche
+* Snapshot als Wiederherstellungspunkt
+* Stabile Netzwerkkommunikation im LAN
 
-<div align="center">
-  <img src="../screenshots/macbook_server.jpg" width="80%" alt="MacBook Pro Proxmox Host">
-  <p><i>Abbildung 1: Das MacBook Pro 2017 im aktiven Server-Betrieb.</i></p>
-</div>
+## 3. Projektumgebung
+### 3.1 Server / Plattform
+* **Hypervisor:** Proxmox VE (Webverwaltung über Port 8006)
+* **Storage:** local (ISO / Backups), local-lvm (VM-Disks, LVM-thin)
+* **Netzwerk:** Bridge vmbr0 (VM im gleichen LAN wie Clients)
 
----
+### 3.2 Client-Hardware (Administration & Tests)
+* **MacBook (Intel, 2017):** Hauptgerät für Administration (WebGUI, Konsole, SSH)
+* **Mac mini (Apple Silicon M4):** Zweites Testgerät zur Validierung der geräteunabhängigen Stabilität.
 
-## 3. Netzwerk-Optimierung (Troubleshooting)
-Ein kritischer Punkt war die Stabilität der Netzwerkbrücke (`vmbr0`).
+## 4. Projektdurchführung
+### 4.2 Netzwerk-Fehleranalyse (zentrales Projektproblem)
+* **Symptome:** Proxmox und VM zeitweise nicht erreichbar.
+* **Analyse:** Ping-Tests und Porttests (nc -zv <IP> 8006).
+* **Ursache:** Inkompatibler Hub.
+* **Lösung:** Austausch des Netzwerkgeräts.
+* **Ergebnis:** Netzwerkverbindung stabil.
 
-* **Problem:** Instabile Verbindung bei Nutzung alter Netzwerk-Hardware (Hubs).
-* **Lösung:** Umgehung der fehlerhaften Hardware durch direkte Port-Zuweisung und Optimierung der Proxmox-Netzwerkkonfiguration. 
-* **Zukunft:** Einbau eines dedizierten Managed Gigabit-Switches zur besseren VLAN-Trennung geplant.
+### 4.6 SSH-Hardening
+* **Ziel:** Nur SSH-Zugriff per Public Key.
+* **Lösung:** Hardening über `/etc/ssh/sshd_config.d/`. Key-only Login erzwungen, Root-Login deaktiviert.
+* **Ergebnis:** SSH nur noch per Key, Passwortlogin deaktiviert.
 
-<div align="center">
-  <img src="../screenshots/network_config.jpg" width="80%" alt="Proxmox Network Config">
-</div>
+### 4.7 Firewall (UFW)
+* UFW aktiv, SSH (Port 22) erlaubt, Rest Deny.
 
----
+### 4.8 Snapshot
+* Name: `post-install-secured` erfolgreich erstellt.
 
-## 4. SSH-Hardening & Sicherheit
-Die Sicherheit steht im Fokus der Administration:
+## 5. Probleme & Lösungen (Übersicht)
+* **Netzwerk instabil:** Inkompatibler Hub -> Austausch.
+* **Copy/Paste Problem:** noVNC Limitierung -> Umstieg auf SSH.
+* **SSH Passwort-Abfrage:** Override Defaults -> sshd -T Hardening.
 
-* **Key-only Login:** Deaktivierung der Passwort-Authentifizierung für den SSH-Zugriff.
-* **Root-Security:** Sperrung des Root-Logins zur Reduzierung der Angriffsfläche.
-* **Ressourcen-Check:** Kontinuierliches Monitoring der CPU-Last zur Erkennung von Anomalien.
+## 6. Testplan
+* **Ping:** ping <IP> -> Antwort [OK]
+* **Porttest:** nc -zv <IP> 8006 -> succeeded [OK]
+* **Firewall:** ufw status -> aktiv [OK]
 
-<div align="center">
-  <img src="../screenshots/cpu_monitoring.jpg" width="80%" alt="CPU Monitoring Dashboard">
-</div>
-
----
-
-## 5. Fazit
-Trotz hardwareseitiger Einschränkungen (kein Switch) wurde eine performante Umgebung geschaffen. Die VM ist nun durch SSH-Keys abgesichert ve bereit für den produktiven Testeinsatz.
+## 7. Fazit
+Das Projekt zeigte, dass reale Systemintegrationsprojekte häufig an Netzwerk- und Hardware-Kompatibilität scheitern. Durch strukturierte Fehleranalyse konnte eine stabile, sichere Serverumgebung aufgebaut werden.
