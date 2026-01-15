@@ -179,17 +179,6 @@ Ein eingesetztes Netzwerkgerät (Hub) erwies sich als inkompatibel bzw. instabil
 - UFW: `ufw status`
 - Snapshot vorhanden: Proxmox GUI / Task OK
 
-### 6.2 Screenshot-Liste (für PDF)
-- Proxmox Login-WebGUI
-- Netzwerk-Bridge `vmbr0`
-- Ubuntu VM Übersicht
-- SSH Login Terminal
-- `sshd -T` Ausgabe
-- `ufw status`
-- Snapshot „post-install-secured“
-
----
-
 ## 7. Fazit
 Das Projekt zeigte, dass reale Systemintegrationsprojekte häufig an Netzwerk- und Hardware-Kompatibilität scheitern und nicht ausschließlich an Software. Durch strukturierte Fehleranalyse und konsequente Sicherheitsmaßnahmen konnte eine stabile, sichere und wartbare Serverumgebung aufgebaut werden.
 MD
