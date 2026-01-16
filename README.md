@@ -1,78 +1,34 @@
 # Homelab Portfolio – Systemintegration & Infrastruktur
 
-Dieses Repository dokumentiert meine praxisorientierten Homelab-Projekte
-im Bereich Systemintegration, Virtualisierung, Containerisierung und IT-Security.
+Dieses Repository dokumentiert meine praxisorientierten Homelab-Projekte im Bereich **Systemintegration**, **Virtualisierung**, **Containerisierung**, **Netzwerk** und **IT-Security**.  
+Fokus: realitätsnahe Szenarien, klare Struktur, nachvollziehbare Dokumentation – als Portfolio für Bewerbungen.
 
-Der Fokus liegt auf realitätsnahen Szenarien, klarer Struktur und nachvollziehbarer Dokumentation.
+## Projekte (Dokumentation)
 
----
+### Projekt A – Proxmox VE: Installation, Netzwerkstabilität, Ubuntu-VM & Hardening
+**Ziel:** Aufbau einer stabilen Virtualisierungsplattform als Basis für weitere Projekte.  
+➡️ Doku: `docs/PROJECT_A_PROXMOX.md`
 
-## Projekt A – Proxmox & Virtualisierung
+### Projekt B – Container & Reverse Proxy (Docker/Compose + NGINX)
+**Ziel:** Reproduzierbare Service-Bereitstellung auf Ubuntu (VM) sowie Veröffentlichung interner Services über einen zentralen Reverse Proxy.  
+**Teildokus:**
+- Docker & Docker Compose auf Ubuntu (inkl. Rechte-Fix, UFW, Snapshot): `docs/PROJECT_B_DOCKER_COMPOSE_UBUNTU.md`
+- NGINX Reverse Proxy mit Docker Compose (path-based Routing): `docs/PROJECT_B_NGINX_REVERSE_PROXY.md`
 
-**Ziel:** Aufbau einer stabilen Virtualisierungsplattform als Basis für alle weiteren Projekte.
+### Projekt C – Security Hardening: SSH Absicherung mit Fail2ban
+**Ziel:** Schutz gegen Brute-Force-Angriffe durch Log-Analyse und automatische IP-Bans.  
+➡️ Doku: `docs/PROJECT_C_SSH_FAIL2BAN.md`
 
-### Inhalte
-- Installation und Grundkonfiguration von **Proxmox VE**
-- Verwaltung virtueller Maschinen (VM Lifecycle)
-- Snapshot-Strategie und Wiederherstellung
-- Netzwerkgrundlagen im virtualisierten Umfeld (Bridges, Interfaces)
+### Projekt D – Cloudflare Tunnel: Publishing von mesutslab.dev
+**Ziel:** Interne Services sicher veröffentlichen **ohne Port-Forwarding** (Cloudflare Tunnel → NGINX).  
+➡️ Doku: `docs/PROJECT_D_CLOUDFLARE_TUNNEL.md`
 
----
+## Technologien (Auszug)
+- Proxmox VE, Ubuntu Server
+- Docker & Docker Compose, NGINX
+- Cloudflare Tunnel, DNS
+- UFW, SSH Hardening, Fail2ban
+- Prometheus & Grafana (Monitoring-Stack im Portfolio-Site dokumentiert)
 
-## Projekt B – Docker & NGINX Reverse Proxy
-
-**Ziel:** Bereitstellung mehrerer Dienste über eine zentrale Infrastruktur.
-
-### Inhalte
-- Aufbau einer **Ubuntu Server VM** auf Proxmox
-- Einrichtung von **Docker** und **Docker Compose**
-- Implementierung eines **NGINX Reverse Proxys**
-- Veröffentlichung mehrerer interner Services über eine zentrale HTTP-Schnittstelle
-- Firewall-Härtung mit **UFW**
-- Tests aus dem lokalen Netzwerk (externer Client)
-
----
-
-## Projekt C – HTTPS / TLS
-
-**Ziel:** Absicherung der Infrastruktur durch moderne Transportverschlüsselung.
-
-### Inhalte
-- TLS-Verschlüsselung mit **Let’s Encrypt**
-- HTTP → HTTPS Weiterleitung
-- DNS-01 Validierung über Cloudflare
-- Produktionsnahe Sicherheitskonfiguration
-
----
-
-## Projekt D – Monitoring (Prometheus & Grafana)
-
-**Ziel:** Transparente Überwachung von Host- und Container-Ressourcen.
-
-### Inhalte
-- Prometheus als Metrics-Collector
-- Grafana zur Visualisierung
-- node-exporter (Host-Metriken)
-- cAdvisor (Container-Metriken)
-- Dashboards:
-  - Node Exporter Full (ID 1860)
-  - Docker / cAdvisor (ID 14282)
-
----
-
-## Ziel des Homelabs
-- Vertiefung praktischer Kenntnisse in der Systemintegration
-- Aufbau einer modularen, erweiterbaren Infrastruktur
-- Vorbereitung auf produktionsnahe Szenarien
-- Saubere Dokumentation als Grundlage für Wissenstransfer und Portfolio
-
----
-
-## Technologien
-- Proxmox VE
-- Ubuntu Server
-- Docker & Docker Compose
-- NGINX
-- Let’s Encrypt / TLS
-- Prometheus & Grafana
-- UFW / SSH / Fail2Ban
+## Live Portfolio
+- Website: https://mesutslab.dev
