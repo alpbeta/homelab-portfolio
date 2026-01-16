@@ -23,6 +23,10 @@ Fokus: realitätsnahe Szenarien, klare Struktur, nachvollziehbare Dokumentation 
 **Ziel:** Interne Services sicher veröffentlichen **ohne Port-Forwarding** (Cloudflare Tunnel → NGINX).  
 ➡️ Doku: `docs/PROJECT_D_CLOUDFLARE_TUNNEL.md`
 
+### <a id="projekt-e-monitoring"></a>Projekt E – Monitoring (Prometheus & Grafana)
+**Ziel:** Überwachung von Host- und Container-Ressourcen mit Prometheus, Grafana, node-exporter und cAdvisor.  
+➡️ Doku: `docs/PROJECT_E_MONITORING.md`
+
 ## Technologien (Auszug)
 - Proxmox VE, Ubuntu Server
 - Docker & Docker Compose, NGINX
